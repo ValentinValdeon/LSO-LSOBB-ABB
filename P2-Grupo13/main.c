@@ -28,7 +28,7 @@ int main(){
     envio env;
     memorizacionPrevia(&lso);
     memorizacionPreviaLSOBB(&lsobb);
-    //memorizacionPreviaABB(&arbolito);
+    memorizacionPreviaABB(&arbolito);
     do{
                 system("cls");
                 printf("Seleccione la operacion a realizar\n");
@@ -266,7 +266,7 @@ void memorizacionPreviaABB(arbol *a){
     char codigo[8];
     int exito;
 
-    if((fp = fopen("Operaciones-Envios.txt","r"))==NULL){
+    if((fp = fopen("PruebaABB.txt","r"))==NULL){
         printf("El archivo esta vacio\n");
         printf("Presione ENTER para continuar");
         getchar();
@@ -274,11 +274,11 @@ void memorizacionPreviaABB(arbol *a){
         while (!(feof(fp))){
             fscanf(fp,"%d",&accion);
             if(accion==1){
-                do{
+                //do{
                     fscanf(fp," %[^\n]s",env.codigo); //El control obliga que el codigo sea de 7 digitos
-                }while(strlen(env.codigo)!= 7);
-                for (i=0;i<=8 ; i++)
-                    env.codigo[i] = toupper(env.codigo[i]);
+                //}while(strlen(env.codigo)!= 7);
+                //for (i=0;i<=8 ; i++)
+                //    env.codigo[i] = toupper(env.codigo[i]);
                 fscanf(fp," %ld",&env.documentoRece);
                 fscanf(fp," %[^\n]s",env.nomyapeRece);
                 fscanf(fp," %[^\n]s",env.domicilioRece);
@@ -288,11 +288,11 @@ void memorizacionPreviaABB(arbol *a){
                 fscanf(fp," %[^\n]s",env.fechaRece);
                 altaABB(a,env);
             }else if(accion==2){
-                do{
+                //do{
                     fscanf(fp," %[^\n]s",env.codigo); //El control obliga que el codigo sea de 7 digitos
-                }while(strlen(env.codigo)!= 7);
-                for (i=0;i<=8 ; i++)
-                    env.codigo[i] = toupper(env.codigo[i]);
+                //}while(strlen(env.codigo)!= 7);
+                //for (i=0;i<=8 ; i++)
+                //    env.codigo[i] = toupper(env.codigo[i]);
                 fscanf(fp," %ld",&env.documentoRece);
                 fscanf(fp," %[^\n]s",env.nomyapeRece);
                 fscanf(fp," %[^\n]s",env.domicilioRece);

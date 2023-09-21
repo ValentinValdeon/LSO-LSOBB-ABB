@@ -81,11 +81,11 @@ int bajaABB(arbol *a,envio env){
                     return 1; //Nodo raiz
                 }else{
                     if(a->padre->izq == a->pos){
-                        a->padre->izq == NULL;
+                        a->padre->izq = NULL;
                         free((void*)(a->pos));
                         return 1; //hijo izq
                     }else{
-                        a->padre->der == NULL;
+                        a->padre->der = NULL;
                         free((void*)(a->pos));
                         return 1; //hijo der
                     }
@@ -98,11 +98,11 @@ int bajaABB(arbol *a,envio env){
                     return 1; //nodo raiz
                 }else{
                     if(a->padre->izq == a->pos){
-                        a->padre->izq == a->pos->der;
+                        a->padre->izq = a->pos->der;
                         free((void*)(a->pos));
                         return 1; //hijo izq
                     }else{
-                        a->padre->der == a->pos->der;
+                        a->padre->der = a->pos->der;
                         free((void*)(a->pos));
                         return 1; //hijo der
                     }
@@ -115,11 +115,11 @@ int bajaABB(arbol *a,envio env){
                     return 1; //nodo raiz
                 }else{
                     if(a->padre->izq == a->pos){
-                        a->padre->izq == a->pos->izq;
+                        a->padre->izq = a->pos->izq;
                         free((void*)(a->pos));
                         return 1; //hijo izq
                     }else{
-                        a->padre->der == a->pos->izq;
+                        a->padre->der = a->pos->izq;
                         free((void*)(a->pos));
                         return 1; //hijo der
                     }
