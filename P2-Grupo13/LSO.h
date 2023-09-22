@@ -10,29 +10,66 @@ void initLSO(lista *lso){
     int i;
     (*lso).cant=0;
 }
+float maxLsoAlta= 0.00, costLsoAlta= 0.00, cantLsoAlta= 0.00, maxLsoBaja= 0.00, costLsoBaja= 0.00, cantLsoBaja= 0.00, maxLsoEvocEx= 0.00;
+float costLsoEvocEx= 0.00, cantLsoEvocEx= 0.00, maxLsoEvocFr= 0.00, costLsoEvocFr= 0.00, cantLsoEvocFr= 0.00;
 
-
-int localizarLSO(char cod[],lista *lso,int *pos){
-    int i=0;
+int localizarLSO(char cod[],lista *lso,int *pos,int accion){
+    int i=0, auxcost=0;
     while(i<(*lso).cant && (strcmp((*lso).arr[i].codigo,cod)<0)){
         i++;
+        if(accion==1){
+            auxcost+=1;
+        }
     }
     (*pos)=i;
-    if (i<(*lso).cant && (strcmp((*lso).arr[i].codigo,cod)==0)){
-        return 1;
-    }else {
+    if (i<(*lso).cant){
+        if((strcmp((*lso).arr[i].codigo,cod)==0)){
+            auxcost++;
+            if(maxLsoEvocEx < auxcost){
+            maxLsoEvocEx = auxcost;
+            }
+            if(accion==1){
+                cantLsoEvocEx+=1;
+                costLsoEvocEx += auxcost;
+            }
+            return 1;
+        }else {
+            auxcost++;
+            if(maxLsoEvocFr < auxcost){
+                maxLsoEvocFr = auxcost;
+            }
+            if(accion==1){
+                cantLsoEvocFr +=1;
+                costLsoEvocFr += auxcost;
+            }
+            return 0;
+        }
+    }else{
+        if(maxLsoEvocFr < auxcost){
+            maxLsoEvocFr = auxcost;
+        }
+        if(accion==1){
+            cantLsoEvocFr +=1;
+            costLsoEvocFr += auxcost;
+        }
         return 0;
     }
 }
 
 int altaLSO(lista *lso,envio env){
-    int pos,exito,i;
-    exito = localizarLSO(env.codigo,lso,&pos);
+    int pos,exito,i, auxcost=0;
+    exito = localizarLSO(env.codigo,lso,&pos,0);
     if(exito == 0){
             if((*lso).cant<MAX){
                 for(i=(*lso).cant-1;i>=pos;i--){
                     (*lso).arr[i+1]=(*lso).arr[i];
+                    costLsoAlta += 1;
+                    auxcost += 1;
                 }
+                if(maxLsoAlta<auxcost){
+                    maxLsoAlta = auxcost;
+                }
+                cantLsoAlta++;
                 (*lso).arr[pos] = env;
                 (*lso).cant++;
                 return 1;//exito alta
@@ -45,8 +82,8 @@ int altaLSO(lista *lso,envio env){
 }
 
 int bajaLSO(lista *lso,envio env){
-    int pos,exito,i,confirmar=0;
-    exito=localizarLSO(env.codigo,lso,&pos);
+    int pos,exito,i,confirmar=0, auxcost=0;
+    exito=localizarLSO(env.codigo,lso,&pos,0);
     if(exito == 1){
         /*printf("Envio N: %d \n",pos+1);
         printf("Codigo: %s \n",(*lso).arr[pos].codigo);
@@ -68,7 +105,14 @@ int bajaLSO(lista *lso,envio env){
            (*lso).arr[pos].documentoRece == env.documentoRece && (*lso).arr[pos].documentoRemi == env.documentoRemi){
             for(i=pos;i<(*lso).cant-1;i++){
                 (*lso).arr[i]=(*lso).arr[i+1];
+                costLsoBaja += 1;
+                auxcost +=1;
+
             }
+            if(maxLsoBaja<auxcost){
+                maxLsoBaja=auxcost;
+            }
+            cantLsoBaja+=1;
             (*lso).cant--;
             return 1; //Baja exitosa
         }else{
@@ -81,94 +125,9 @@ int bajaLSO(lista *lso,envio env){
 
 envio evocacionLSO(char cod[], lista lso,int *exito){
     int pos;
-    *exito = localizarLSO(cod,&lso,&pos);
+    *exito = localizarLSO(cod,&lso,&pos,1);
     if(*exito == 1)
         return lso.arr[pos];
-}
-
-int modificarLSO(int codigo,lista *lso){
-    int pos=0,fin=0;
-    long documentoRece;
-    char nomyapeRece[81];
-    char domicilioRece[81];
-    long documentoRemi;
-    char nomyapeRemi[81];
-    char fechaEnv[11];
-    char fechaRece[11];
-    if (localizarLSO(codigo,lso,&pos)){
-        do{
-            printf("Envio N: %d \n",pos+1);
-            printf("Codigo: %s \n",(*lso).arr[pos].codigo);
-            printf("<1>Documento del receptor: %ld \n",(*lso).arr[pos].documentoRece);
-            printf("<2>Nombre y Apellido del receptor: %s \n",(*lso).arr[pos].nomyapeRece);
-            printf("<3>Domicilio del receptor: %s \n",(*lso).arr[pos].domicilioRece);
-            printf("<4>Documento del remitente: %ld \n",(*lso).arr[pos].documentoRemi);
-            printf("<5>Nombre y Apellido del remitente: %s \n",(*lso).arr[pos].nomyapeRemi);
-            printf("<6>Fecha de envio: %s \n",(*lso).arr[pos].fechaEnv);
-            printf("<7>Fecha de recepcion: %s \n",(*lso).arr[pos].fechaRece);
-            printf("<8>Terminar modificaciones \n");
-            printf("Que desea modificar <1-8> \n");
-            scanf("%d",&fin);
-            fflush(stdin);
-            switch(fin){
-                case 1:
-                    system("cls");
-                    printf("Ingrese el nuevo Documento del Receptor\n");
-                    scanf("%ld",&documentoRece);
-                    (*lso).arr[pos].documentoRece = documentoRece;
-                    break;
-                case 2:
-                    system("cls");
-                    printf("Ingrese el nuevo Nombre y Apellido del Receptor\n");
-                    scanf("%[^\n]s",nomyapeRece);
-                    strcpy((*lso).arr[pos].nomyapeRece,nomyapeRece);
-                    break;
-                case 3:
-                    system("cls");
-                    printf("Ingrese el nuevo Domicilio del Receptor\n");
-                    scanf("%[^\n]s",domicilioRece);
-                    strcpy((*lso).arr[pos].domicilioRece,domicilioRece);
-                    break;
-                case 4:
-                    system("cls");
-                    printf("Ingrese el nuevo Documento del Remitente\n");
-                    scanf("%ld",&documentoRemi);
-                    (*lso).arr[pos].documentoRemi= documentoRemi;
-                    break;
-                case 5:
-                    system("cls");
-                    printf("Ingrese el nuevo Nombre y Apellido del Remitente\n");
-                    scanf("%[^\n]s",nomyapeRemi);
-                    strcpy((*lso).arr[pos].nomyapeRemi,nomyapeRemi);
-                    break;
-                case 6:
-                    system("cls");
-                    printf("Ingrese la nueva Fecha de Envio\n");
-                    scanf("%[^\n]s",fechaEnv);
-                    strcpy((*lso).arr[pos].fechaEnv,fechaEnv);
-                    break;
-                case 7:
-                    system("cls");
-                    printf("Ingrese la nueva Fecha de Recepcion \n");
-                    scanf("%[^\n]s",fechaRece);
-                    strcpy((*lso).arr[pos].fechaRece,fechaRece);
-                    break;
-                case 8:
-                    system("cls");
-                    break;
-                default:
-                    system("cls");
-                    printf("-------------------Opcion Incorrecta--------------------\n");
-                    printf("------Presione cualquier tecla para volver al menu------");
-                    getchar();
-                    break;
-            }
-        }while(fin !=8);
-        return 1;
-    }else{
-        return 0;
-    }
-
 }
 
 #endif // LSO_H_INCLUDED

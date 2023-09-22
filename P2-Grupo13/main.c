@@ -10,7 +10,7 @@
 //MARIANO ARBELOA GUGLIELMINO
 //VALENTIN VALDEON
 
-
+void comparacion(lista lso, listabb lsobb, arbol a);
 void mostrarEstructura(lista lso);
 void mostrarEstructuraLSOBB(listabb lsobb);
 void memorizacionPrevia(lista *lso);
@@ -45,7 +45,8 @@ int main(){
                 switch(opcMenuOp){
                     case 1:
                         system("cls");
-
+                        comparacion(lso,lsobb,arbolito);
+                        getchar();
                         break;
                     case 2:
                         system("cls");
@@ -75,6 +76,25 @@ int main(){
             }
     }while(opcMenuOp !=5);
     return 0;
+}
+
+void comparacion(lista lso,listabb lsobb,arbol a){
+        printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
+        printf("        |   Max. Alta  |   Med. Alta   |  Max. Baja   |   Med. Baja   | Max. Evocar Exito | Med. Evocar Exito | Max Evocar Fracaso | Med Evocar Fracaso|\n");
+        printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
+        printf("  LSO   |    %.2f     |     %.2f     |     %.2f    |     %.2f     |       %.2f       |       %.2f       |       %.2f        |       %.2f       | \n",maxLsoAlta,(costLsoAlta/cantLsoAlta),maxLsoBaja,(costLsoBaja/cantLsoBaja),maxLsoEvocEx,(costLsoEvocEx/cantLsoEvocEx),maxLsoEvocFr,(costLsoEvocFr/cantLsoEvocFr));
+        printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
+        printf(" LSOBB  |     %.2f    |     %.2f     |     %.2f    |     %.2f     |       %.2f        |       %.2f        |        %.2f        |       %.2f        |\n",maxLsobbAlta,(costLsobbAlta/cantLsobbAlta),maxLsobbBaja,(costLsobbBaja/cantLsobbBaja),maxLsobbEvocEx,(costLsobbEvocEx/cantLsobbEvocEx),maxLsobbEvocFr,(costLsobbEvocFr/cantLsobbEvocFr));
+        printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
+        printf("  ABB   |     %.2f     |     %.2f      |     %.2f     |     %.2f      |       %.2f       |       %.2f        |        %.2f       |       %.2f        |\n",maxAbbAlta,(costAbbAlta/cantAbbAlta),maxAbbBaja,(costAbbBaja/cantAbbBaja),maxAbbEvocEx,(costAbbEvocEx/cantAbbEvocEx),maxAbbEvocFr,(costAbbEvocFr/cantAbbEvocFr));
+        printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
+        /*Lo primero que debemos tener en cuenta cuando realizamos esta comparacion son las funciones de costo utilizadas, para el evocar la
+        funcion de costo de todas las estructuras es "cantidad de celdas consultadas", para la alta y baja del RS y ABB se considera "cambio de
+        punteros", y en las listas secuenciales(LSO,LSOBB,RAL) consideramos cantidad de corrimientos,debido a esta funcion de costo el esfuerzo
+        medio y maximo del RAL es 0 ya que no presenta corrimiento de celdas, si comparamos la LSO con la LSOBB podemos ver el claro beneficio
+        de la busqueda binaria en la evocacion, se puede ver que de todas las estructuras las que tuvieron un menor costo tanto maximo como medio
+        de evocacion fueron el RS y el ABB, ambas estructuras dinamicas con manejo de punteros y las estructuras mas costosas tanto en la alta
+        como en la baja fueron la LSO y LSOBB, lo cual era esperado ya que como se sabe dichos costos son de O(N)*/
 }
 
 void mostrarEstructura(lista lso){
@@ -266,7 +286,7 @@ void memorizacionPreviaABB(arbol *a){
     char codigo[8];
     int exito;
 
-    if((fp = fopen("PruebaABB.txt","r"))==NULL){
+    if((fp = fopen("Operaciones-Envios.txt","r"))==NULL){
         printf("El archivo esta vacio\n");
         printf("Presione ENTER para continuar");
         getchar();
@@ -274,11 +294,11 @@ void memorizacionPreviaABB(arbol *a){
         while (!(feof(fp))){
             fscanf(fp,"%d",&accion);
             if(accion==1){
-                //do{
+                do{
                     fscanf(fp," %[^\n]s",env.codigo); //El control obliga que el codigo sea de 7 digitos
-                //}while(strlen(env.codigo)!= 7);
-                //for (i=0;i<=8 ; i++)
-                //    env.codigo[i] = toupper(env.codigo[i]);
+                }while(strlen(env.codigo)!= 7);
+                for (i=0;i<=8 ; i++)
+                    env.codigo[i] = toupper(env.codigo[i]);
                 fscanf(fp," %ld",&env.documentoRece);
                 fscanf(fp," %[^\n]s",env.nomyapeRece);
                 fscanf(fp," %[^\n]s",env.domicilioRece);
@@ -288,11 +308,11 @@ void memorizacionPreviaABB(arbol *a){
                 fscanf(fp," %[^\n]s",env.fechaRece);
                 altaABB(a,env);
             }else if(accion==2){
-                //do{
+                do{
                     fscanf(fp," %[^\n]s",env.codigo); //El control obliga que el codigo sea de 7 digitos
-                //}while(strlen(env.codigo)!= 7);
-                //for (i=0;i<=8 ; i++)
-                //    env.codigo[i] = toupper(env.codigo[i]);
+                }while(strlen(env.codigo)!= 7);
+                for (i=0;i<=8 ; i++)
+                    env.codigo[i] = toupper(env.codigo[i]);
                 fscanf(fp," %ld",&env.documentoRece);
                 fscanf(fp," %[^\n]s",env.nomyapeRece);
                 fscanf(fp," %[^\n]s",env.domicilioRece);

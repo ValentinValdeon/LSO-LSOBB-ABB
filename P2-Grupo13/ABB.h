@@ -4,6 +4,8 @@
 #include <conio.h>
 #include "envios.h"
 #include <malloc.h>
+float maxAbbAlta= 0.00, costAbbAlta= 0.00, cantAbbAlta= 0.00, maxAbbBaja= 0.00, costAbbBaja= 0.00, cantAbbBaja= 0.00;
+float maxAbbEvocEx= 0.00, costAbbEvocEx= 0.00, cantAbbEvocEx= 0.00, maxAbbEvocFr= 0.00, costAbbEvocFr= 0.00, cantAbbEvocFr= 0.00;
 typedef struct Nodo{
     envio env;
     struct Nodo *der;
@@ -20,7 +22,8 @@ void initABB(arbol *a){
     (*a).raiz=NULL;
 }
 
-int localizarABB(char cod[],arbol *a){
+int localizarABB(char cod[],arbol *a,int accion){
+    int auxcost=0;
     a->pos=a->raiz;
     a->padre=a->raiz;
     while(a->pos != NULL && strcmp(a->pos->env.codigo,cod) != 0){
@@ -31,16 +34,36 @@ int localizarABB(char cod[],arbol *a){
             a->padre = a->pos;
             a->pos = a->pos->izq;
         }
+        if(accion==1){
+            auxcost+=1;
+        }
     }
     if(a->pos != NULL){
+        auxcost++;
+        if(maxAbbEvocEx < auxcost){
+            maxAbbEvocEx = auxcost;
+        }
+        if(accion==1){
+            cantAbbEvocEx+=1;
+            costAbbEvocEx += auxcost;
+        }
         return 1;
     }else{
+        auxcost++;
+        if(maxAbbEvocFr < auxcost){
+            maxAbbEvocFr = auxcost;
+        }
+        if(accion==1){
+            cantAbbEvocFr+=1;
+            costAbbEvocFr += auxcost;
+        }
         return 0;
     }
 }
 
 int altaABB(arbol *a,envio env){
-    if(!localizarABB(env.codigo,a)){
+    float auxcost=0;
+    if(!localizarABB(env.codigo,a,0)){
         nodo *nuevo_nodo;
         nuevo_nodo=(nodo*)malloc(sizeof(nodo));
         if(nuevo_nodo == NULL){
@@ -49,6 +72,12 @@ int altaABB(arbol *a,envio env){
             nuevo_nodo->env=env;
             nuevo_nodo->der=NULL;
             nuevo_nodo->izq=NULL;
+            auxcost+=0.5;
+            if(maxAbbAlta<auxcost){
+                maxAbbAlta=auxcost;
+            }
+            costAbbAlta+=0.5;
+            cantAbbAlta++;
             if(a->raiz == NULL){
                 a->raiz=nuevo_nodo;
                 return 1;//arbol sin elementos
@@ -59,7 +88,6 @@ int altaABB(arbol *a,envio env){
                 a->padre->izq = nuevo_nodo;
                 return 1;//arbol con padre mayor al nuevo elemento
             }
-
         }
     }else{
         return 0;//El envio se encontro en el arbol
@@ -67,7 +95,8 @@ int altaABB(arbol *a,envio env){
 }
 
 int bajaABB(arbol *a,envio env){
-    if(!localizarABB(env.codigo,a)){
+    float auxcost=0;
+    if(!localizarABB(env.codigo,a,0)){
         return 2;
     }else{
         nodo *aux;
@@ -75,6 +104,12 @@ int bajaABB(arbol *a,envio env){
            strcmp(a->pos->env.domicilioRece,env.domicilioRece)==0 && strcmp(a->pos->env.fechaEnv,env.fechaEnv)==0 && strcmp(a->pos->env.fechaRece,env.fechaRece)==0 &&
            a->pos->env.documentoRece == env.documentoRece && a->pos->env.documentoRemi == env.documentoRemi){
             if(a->pos->der == NULL && a->pos->izq == NULL){ //NODO SIN HIJOS
+                auxcost+=0.5;
+                if(maxAbbBaja<auxcost){
+                    maxAbbBaja=auxcost;
+                }
+                costAbbBaja+=0.5;
+                cantAbbBaja++;
                 if(a->pos == a->raiz){
                     a->raiz = NULL;
                     free((void*)(a->pos));
@@ -92,6 +127,12 @@ int bajaABB(arbol *a,envio env){
                 }
             }
             if(a->pos->der != NULL && a->pos->izq == NULL){//NODO CON HIJO DERECHO
+                auxcost+=0.5;
+                if(maxAbbBaja<auxcost){
+                    maxAbbBaja=auxcost;
+                }
+                costAbbBaja+=0.5;
+                cantAbbBaja++;
                 if(a->pos == a->raiz){
                     a->raiz = a->pos->der;
                     free((void*)(a->pos));
@@ -109,6 +150,12 @@ int bajaABB(arbol *a,envio env){
                 }
             }
             if(a->pos->der == NULL && a->pos->izq != NULL){//NODO CON HIJO IZQUIERDO
+                auxcost+=0.5;
+                if(maxAbbBaja<auxcost){
+                    maxAbbBaja=auxcost;
+                }
+                costAbbBaja+=0.5;
+                cantAbbBaja++;
                 if(a->pos == a->raiz){
                     a->raiz = a->pos->izq;
                     free((void*)(a->pos));
@@ -132,12 +179,23 @@ int bajaABB(arbol *a,envio env){
                     aux = a->pos;
                     a->pos = a->pos->izq;
                 }
+                auxcost++;
                 a->padre->env = a->pos->env;
                 if(a->padre->der != a->pos){
                     a->padre = aux;
                     a->padre->izq = a->pos->der; //pos con hijo derecho
+                    auxcost+=0.5;
+                    if(maxAbbBaja<auxcost){
+                        maxAbbBaja=auxcost;
+                    }
+                    costAbbBaja+=0.5;
+                    cantAbbBaja++;
                 }else{
                     a->padre->der = a->pos->der; //pos sin hijo izquierdo
+                    if(maxAbbBaja<auxcost){
+                        maxAbbBaja=auxcost;
+                    }
+                    cantAbbBaja++;
                 }
                 free((void*)(a->pos));
                 return 1;
@@ -148,7 +206,7 @@ int bajaABB(arbol *a,envio env){
 
 
 envio evocacionABB(arbol a,char cod[],int *exito){
-    *exito=localizarABB(&a,cod);
+    *exito=localizarABB(cod,&a,1);
     if(*exito){
         return a.pos->env;
     }

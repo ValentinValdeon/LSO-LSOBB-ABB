@@ -11,12 +11,15 @@ void initLSOBB(listabb *lsobb){
     int i;
     (*lsobb).cant=0;
 }
+float maxLsobbAlta = 0.00, costLsobbAlta= 0.00, cantLsobbAlta= 0.00, maxLsobbBaja= 0.00, costLsobbBaja= 0.00, cantLsobbBaja= 0.00;
+float maxLsobbEvocEx= 0.00, costLsobbEvocEx= 0.00, cantLsobbEvocEx= 0.00, maxLsobbEvocFr= 0.00, costLsobbEvocFr= 0.00, cantLsobbEvocFr= 0.00;
 
-
-int localizarLSOBB(char cod[],listabb *lsobb,int *pos){
+int localizarLSOBB(char cod[],listabb *lsobb,int *pos, int accion){
     float li = -1, ls = (*lsobb).cant-1;
     int testigo;
+    int auxcost=0;
     while(li<ls){
+        auxcost+=1;
         testigo = ceil((li+ls)/2);
         if((strcmp((*lsobb).arr[testigo].codigo,cod)<0)){
             li = testigo;
@@ -24,27 +27,61 @@ int localizarLSOBB(char cod[],listabb *lsobb,int *pos){
             ls = testigo-1;
         }
     }
-    if (strcmp((*lsobb).arr[(int)li + 1].codigo,cod)==0){
+    if (strcmp((*lsobb).arr[(int)li + 1].codigo,cod)==0){ //consultar si el == cuenta como consulta
+        auxcost++;
+        if(maxLsobbEvocEx < auxcost){
+            maxLsobbEvocEx = auxcost;
+        }
+        if(accion==1){
+            cantLsobbEvocEx+=1;
+            costLsobbEvocEx += auxcost;
+        }
         (*pos)=li + 1;
         return 1;
     }else{
-        if (ls == (*lsobb).cant-1 && strcmp((*lsobb).arr[(int)ls].codigo,cod)>0){
-            (*pos)=ls;
+        auxcost++;
+        if (ls == (*lsobb).cant-1){
+            if (strcmp((*lsobb).arr[(int)ls].codigo,cod)>0){
+                (*pos)=ls;
+            }else{
+                (*pos)=ls + 1;
+            }
+            auxcost++;
+            if(maxLsobbEvocFr < auxcost){
+                maxLsobbEvocFr = auxcost;
+            }
+            if(accion==1){
+                cantLsobbEvocFr +=1;
+                costLsobbEvocFr += auxcost;
+            }
         }else{
             (*pos)=ls + 1;
+            if(maxLsobbEvocFr < auxcost){
+                maxLsobbEvocFr = auxcost;
+            }
+            if(accion==1){
+                    cantLsobbEvocFr +=1;
+                    costLsobbEvocFr += auxcost;
+            }
         }
         return 0;
     }
 }
 
 int altaLSOBB(listabb *lsobb,envio env){
-    int pos,exito,i;
-    exito = localizarLSOBB(env.codigo,lsobb,&pos);
+    int pos,exito,i,auxcost=0;
+    exito = localizarLSOBB(env.codigo,lsobb,&pos,0);
     if(exito == 0){
             if((*lsobb).cant<MAX){
                 for(i=(*lsobb).cant-1;i>=pos;i--){
                     (*lsobb).arr[i+1]=(*lsobb).arr[i];
+                    costLsobbAlta += 1;
+                    auxcost += 1;
                 }
+                if(maxLsobbAlta<auxcost){
+                    maxLsobbAlta = auxcost;
+                }
+                cantLsobbAlta++;
                 (*lsobb).arr[pos] = env;
                 (*lsobb).cant++;
                 //printf("%d \n",(*lsobb).cant);
@@ -58,8 +95,8 @@ int altaLSOBB(listabb *lsobb,envio env){
 }
 
 int bajaLSOBB(listabb *lsobb,envio env){
-    int pos,exito,i,confirmar=0;
-    exito=localizarLSOBB(env.codigo,lsobb,&pos);
+    int pos,exito,i,confirmar=0,auxcost=0;
+    exito=localizarLSOBB(env.codigo,lsobb,&pos,0);
     if(exito == 1){
         /*printf("Envio N: %d \n",pos+1);
         printf("Codigo: %s \n",(*lsobb).arr[pos].codigo);
@@ -81,7 +118,14 @@ int bajaLSOBB(listabb *lsobb,envio env){
            (*lsobb).arr[pos].documentoRece == env.documentoRece && (*lsobb).arr[pos].documentoRemi == env.documentoRemi){
             for(i=pos;i<(*lsobb).cant-1;i++){
                 (*lsobb).arr[i]=(*lsobb).arr[i+1];
+                costLsobbBaja += 1;
+                auxcost +=1;
+
             }
+            if(maxLsobbBaja<auxcost){
+                maxLsobbBaja=auxcost;
+            }
+            cantLsobbBaja+=1;
             (*lsobb).cant--;
             return 1; //Baja exitosa
         }else{
@@ -94,7 +138,7 @@ int bajaLSOBB(listabb *lsobb,envio env){
 
 envio evocacionLSOBB(char cod[], listabb lsobb,int *exito){
     int pos;
-    *exito = localizarLSOBB(cod,&lsobb,&pos);
+    *exito = localizarLSOBB(cod,&lsobb,&pos,1);
     if(*exito == 1)
         return lsobb.arr[pos];
 }

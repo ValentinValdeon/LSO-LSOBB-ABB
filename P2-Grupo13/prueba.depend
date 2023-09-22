@@ -172,3 +172,28 @@
 	"envios.h"
 	<malloc.h>
 
+1695352841 source:e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\lso-lsobb-abb\p2-grupo13\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"string.h"
+	"envios.h"
+	"LSO.h"
+	"LSOBB.h"
+	"ABB.h"
+
+1695341904 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\lso-lsobb-abb\p2-grupo13\envios.h
+
+1695349757 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\lso-lsobb-abb\p2-grupo13\lso.h
+	"envios.h"
+
+1695348906 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\lso-lsobb-abb\p2-grupo13\lsobb.h
+	"envios.h"
+	"math.h"
+
+1695352259 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\lso-lsobb-abb\p2-grupo13\abb.h
+	<string.h>
+	<conio.h>
+	"envios.h"
+	<malloc.h>
+
