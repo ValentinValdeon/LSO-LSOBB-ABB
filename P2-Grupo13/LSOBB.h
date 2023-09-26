@@ -16,19 +16,28 @@ float maxLsobbEvocEx= 0.00, costLsobbEvocEx= 0.00, cantLsobbEvocEx= 0.00, maxLso
 
 int localizarLSOBB(char cod[],listabb *lsobb,int *pos, int accion){
     float li = -1, ls = (*lsobb).cant-1;
-    int testigo;
+    int testigo,i;
     int auxcost=0;
+    int arr[(*lsobb).cant];
+    for(i=0;i<(*lsobb).cant;i++){
+        arr[i]=0;
+    }
     while(li<ls){
-        auxcost+=1;
         testigo = ceil((li+ls)/2);
         if((strcmp((*lsobb).arr[testigo].codigo,cod)<0)){
             li = testigo;
         }else{
             ls = testigo-1;
         }
+        if(arr[testigo]==0){
+            arr[testigo]=1;
+            auxcost+=1;
+        }
     }
     if (strcmp((*lsobb).arr[(int)li + 1].codigo,cod)==0){ //consultar si el == cuenta como consulta
-        auxcost++;
+        if(arr[(int)li+1]==0){
+            auxcost++;
+        }
         if(maxLsobbEvocEx < auxcost){
             maxLsobbEvocEx = auxcost;
         }
@@ -39,14 +48,15 @@ int localizarLSOBB(char cod[],listabb *lsobb,int *pos, int accion){
         (*pos)=li + 1;
         return 1;
     }else{
-        auxcost++;
         if (ls == (*lsobb).cant-1){
             if (strcmp((*lsobb).arr[(int)ls].codigo,cod)>0){
                 (*pos)=ls;
             }else{
                 (*pos)=ls + 1;
             }
-            auxcost++;
+            if(arr[(int)li+1]==0){
+                auxcost++;
+            }
             if(maxLsobbEvocFr < auxcost){
                 maxLsobbEvocFr = auxcost;
             }
@@ -98,21 +108,6 @@ int bajaLSOBB(listabb *lsobb,envio env){
     int pos,exito,i,confirmar=0,auxcost=0;
     exito=localizarLSOBB(env.codigo,lsobb,&pos,0);
     if(exito == 1){
-        /*printf("Envio N: %d \n",pos+1);
-        printf("Codigo: %s \n",(*lsobb).arr[pos].codigo);
-        printf("Documento del receptor: %ld \n",(*lsobb).arr[pos].documentoRece);
-        printf("Nombre y Apellido del receptor: %s \n",(*lsobb).arr[pos].nomyapeRece);
-        printf("Domicilio del receptor: %s \n",(*lsobb).arr[pos].domicilioRece);
-        printf("Documento del remitente: %ld \n",(*lsobb).arr[pos].documentoRemi);
-        printf("Nombre y Apellido del remitente: %s \n",(*lsobb).arr[pos].nomyapeRemi);
-        printf("Fecha de envio: %s \n",(*lsobb).arr[pos].fechaEnv);
-        printf("Fecha de recepcion: %s \n",(*lsobb).arr[pos].fechaRece);
-        printf("Desea eliminar este envio? <1>Si <2>No \n");
-        scanf("%d",&confirmar);
-        while(confirmar < 1 || confirmar > 2){
-            printf("Ingrese una opcion correcta <1>SI <2>NO");
-            scanf("%d",&confirmar);
-        }*/
         if(strcmp((*lsobb).arr[pos].codigo,env.codigo)==0 && strcmp((*lsobb).arr[pos].nomyapeRemi,env.nomyapeRemi)==0 && strcmp((*lsobb).arr[pos].nomyapeRece,env.nomyapeRece)==0 &&
            strcmp((*lsobb).arr[pos].domicilioRece,env.domicilioRece)==0 && strcmp((*lsobb).arr[pos].fechaEnv,env.fechaEnv)==0 && strcmp((*lsobb).arr[pos].fechaRece,env.fechaRece)==0 &&
            (*lsobb).arr[pos].documentoRece == env.documentoRece && (*lsobb).arr[pos].documentoRemi == env.documentoRemi){

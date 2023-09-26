@@ -49,7 +49,6 @@ int localizarABB(char cod[],arbol *a,int accion){
         }
         return 1;
     }else{
-        auxcost++;
         if(maxAbbEvocFr < auxcost){
             maxAbbEvocFr = auxcost;
         }

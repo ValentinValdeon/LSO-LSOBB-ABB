@@ -85,21 +85,6 @@ int bajaLSO(lista *lso,envio env){
     int pos,exito,i,confirmar=0, auxcost=0;
     exito=localizarLSO(env.codigo,lso,&pos,0);
     if(exito == 1){
-        /*printf("Envio N: %d \n",pos+1);
-        printf("Codigo: %s \n",(*lso).arr[pos].codigo);
-        printf("Documento del receptor: %ld \n",(*lso).arr[pos].documentoRece);
-        printf("Nombre y Apellido del receptor: %s \n",(*lso).arr[pos].nomyapeRece);
-        printf("Domicilio del receptor: %s \n",(*lso).arr[pos].domicilioRece);
-        printf("Documento del remitente: %ld \n",(*lso).arr[pos].documentoRemi);
-        printf("Nombre y Apellido del remitente: %s \n",(*lso).arr[pos].nomyapeRemi);
-        printf("Fecha de envio: %s \n",(*lso).arr[pos].fechaEnv);
-        printf("Fecha de recepcion: %s \n",(*lso).arr[pos].fechaRece);
-        printf("Desea eliminar este envio? <1>Si <2>No \n");
-        scanf("%d",&confirmar);
-        while(confirmar < 1 || confirmar > 2){
-            printf("Ingrese una opcion correcta <1>SI <2>NO");
-            scanf("%d",&confirmar);
-        }*/
         if(strcmp((*lso).arr[pos].codigo,env.codigo)==0 && strcmp((*lso).arr[pos].nomyapeRemi,env.nomyapeRemi)==0 && strcmp((*lso).arr[pos].nomyapeRece,env.nomyapeRece)==0 &&
            strcmp((*lso).arr[pos].domicilioRece,env.domicilioRece)==0 && strcmp((*lso).arr[pos].fechaEnv,env.fechaEnv)==0 && strcmp((*lso).arr[pos].fechaRece,env.fechaRece)==0 &&
            (*lso).arr[pos].documentoRece == env.documentoRece && (*lso).arr[pos].documentoRemi == env.documentoRemi){

@@ -88,13 +88,6 @@ void comparacion(lista lso,listabb lsobb,arbol a){
         printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
         printf("  ABB   |     %.2f     |     %.2f      |     %.2f     |     %.2f      |       %.2f       |       %.2f        |        %.2f       |       %.2f        |\n",maxAbbAlta,(costAbbAlta/cantAbbAlta),maxAbbBaja,(costAbbBaja/cantAbbBaja),maxAbbEvocEx,(costAbbEvocEx/cantAbbEvocEx),maxAbbEvocFr,(costAbbEvocFr/cantAbbEvocFr));
         printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
-        /*Lo primero que debemos tener en cuenta cuando realizamos esta comparacion son las funciones de costo utilizadas, para el evocar la
-        funcion de costo de todas las estructuras es "cantidad de celdas consultadas", para la alta y baja del RS y ABB se considera "cambio de
-        punteros", y en las listas secuenciales(LSO,LSOBB,RAL) consideramos cantidad de corrimientos,debido a esta funcion de costo el esfuerzo
-        medio y maximo del RAL es 0 ya que no presenta corrimiento de celdas, si comparamos la LSO con la LSOBB podemos ver el claro beneficio
-        de la busqueda binaria en la evocacion, se puede ver que de todas las estructuras las que tuvieron un menor costo tanto maximo como medio
-        de evocacion fueron el RS y el ABB, ambas estructuras dinamicas con manejo de punteros y las estructuras mas costosas tanto en la alta
-        como en la baja fueron la LSO y LSOBB, lo cual era esperado ya que como se sabe dichos costos son de O(N)*/
 }
 
 void mostrarEstructura(lista lso){
@@ -206,9 +199,7 @@ void memorizacionPrevia(lista *lso){
         {
             printf("Se llego al limite de Envios, quedaron vendedores sin cargar del archivo.\n");
         }
-        printf("Presione ENTER para continuar");
         fflush(stdin);
-        getchar();
         system("cls");
     }
     fclose(fp);
@@ -270,9 +261,7 @@ void memorizacionPreviaLSOBB(listabb *lsobb){
         {
             printf("Se llego al limite de Envios, quedaron vendedores sin cargar del archivo.\n");
         }
-        printf("Presione ENTER para continuar");
         fflush(stdin);
-        getchar();
         system("cls");
     }
     fclose(fp);
@@ -335,9 +324,7 @@ void memorizacionPreviaABB(arbol *a){
         {
             printf("Se llego al limite de Envios, quedaron vendedores sin cargar del archivo.\n");
         }
-        printf("Presione ENTER para continuar");
         fflush(stdin);
-        getchar();
         system("cls");
     }
     fclose(fp);
