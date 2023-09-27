@@ -179,6 +179,7 @@ int bajaABB(arbol *a,envio env){
                     a->pos = a->pos->izq;
                 }
                 auxcost++;
+                costAbbBaja++;
                 a->padre->env = a->pos->env;
                 if(a->padre->der != a->pos){
                     a->padre = aux;
@@ -187,13 +188,14 @@ int bajaABB(arbol *a,envio env){
                     if(maxAbbBaja<auxcost){
                         maxAbbBaja=auxcost;
                     }
-                    costAbbBaja+=0.5;
+                    costAbbBaja+= 0.5;
                     cantAbbBaja++;
                 }else{
                     a->padre->der = a->pos->der; //pos sin hijo izquierdo
                     if(maxAbbBaja<auxcost){
                         maxAbbBaja=auxcost;
                     }
+                    costAbbBaja+= 0.5;
                     cantAbbBaja++;
                 }
                 free((void*)(a->pos));

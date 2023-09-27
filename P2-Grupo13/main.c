@@ -30,50 +30,50 @@ int main(){
     memorizacionPreviaLSOBB(&lsobb);
     memorizacionPreviaABB(&arbolito);
     do{
-                system("cls");
-                printf("Seleccione la operacion a realizar\n");
-                printf("--------------------------------------------------------------- \n");
-                printf("<1> Comparacion de estructuras\n");
-                printf("<2> Mostrar todos los envios (LSO)\n");
-                printf("<3> Mostrar todos los envios (LSOBB)\n");
-                printf("<4> Mostrar todos los envios (ABB)\n");
-                printf("<5> Salir\n");
-                printf("--------------------------------------------------------------- \n");
-                printf("Ingrese una opcion\n");
-                scanf("%d",&opcMenuOp);
-                fflush(stdin);
-                switch(opcMenuOp){
-                    case 1:
-                        system("cls");
-                        comparacion(lso,lsobb,arbolito);
-                        getchar();
-                        break;
-                    case 2:
-                        system("cls");
-                        mostrarEstructura(lso);
-                        getchar();
-                        break;
-                    case 3:
-                        system("cls");
-                        mostrarEstructuraLSOBB(lsobb);
-                        getchar();
-                        break;
-                    case 4:
-                        system("cls");
-                        preOrden(arbolito.raiz);
-                        getchar();
-                        break;
-                    case 5:
-                        system("cls");
-                        printf("Gracias por utilizar nuestro sistema");
-                        exit(1);
-                    default:
-                        system("cls");
-                        printf("-------------------Opcion Incorrecta--------------------\n");
-                        printf("------Presione cualquier tecla para volver al menu------");
-                        getchar();
-                        break;
-            }
+            system("cls");
+            printf("Seleccione la operacion a realizar\n");
+            printf("--------------------------------------------------------------- \n");
+            printf("<1> Comparacion de estructuras\n");
+            printf("<2> Mostrar todos los envios (LSO)\n");
+            printf("<3> Mostrar todos los envios (LSOBB)\n");
+            printf("<4> Mostrar todos los envios (ABB)\n");
+            printf("<5> Salir\n");
+            printf("--------------------------------------------------------------- \n");
+            printf("Ingrese una opcion\n");
+            scanf("%d",&opcMenuOp);
+            fflush(stdin);
+            switch(opcMenuOp){
+                case 1:
+                    system("cls");
+                    comparacion(lso,lsobb,arbolito);
+                    getchar();
+                    break;
+                case 2:
+                    system("cls");
+                    mostrarEstructura(lso);
+                    getchar();
+                    break;
+                case 3:
+                    system("cls");
+                    mostrarEstructuraLSOBB(lsobb);
+                    getchar();
+                    break;
+                case 4:
+                    system("cls");
+                    preOrden(arbolito.raiz);
+                    getchar();
+                    break;
+                case 5:
+                    system("cls");
+                    printf("Gracias por utilizar nuestro sistema");
+                    exit(1);
+                default:
+                    system("cls");
+                    printf("-------------------Opcion Incorrecta--------------------\n");
+                    printf("------Presione cualquier tecla para volver al menu------");
+                    getchar();
+                    break;
+        }
     }while(opcMenuOp !=5);
     return 0;
 }
