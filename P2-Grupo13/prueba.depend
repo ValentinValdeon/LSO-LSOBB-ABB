@@ -222,7 +222,7 @@
 	"envios.h"
 	<malloc.h>
 
-1695775503 source:e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\main.c
+1696976563 source:e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\main.c
 	<stdio.h>
 	<stdlib.h>
 	<ctype.h>
@@ -232,16 +232,66 @@
 	"LSOBB.h"
 	"ABB.h"
 
-1695775351 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\envios.h
+1696799281 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\envios.h
 
-1695775351 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\lso.h
+1696800138 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\lso.h
 	"envios.h"
 
-1695775351 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\lsobb.h
+1696811742 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\lsobb.h
 	"envios.h"
 	"math.h"
 
-1695776084 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\abb.h
+1696800138 e:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\abb.h
+	<string.h>
+	<conio.h>
+	"envios.h"
+	<malloc.h>
+
+1696521122 source:d:\educación\a.unsl\2do\segundo cuatrimentre\eda\tpmaquina\p2-grupo13\p2-grupo13\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"string.h"
+	"envios.h"
+	"LSO.h"
+	"LSOBB.h"
+	"ABB.h"
+
+1695775351 d:\educación\a.unsl\2do\segundo cuatrimentre\eda\tpmaquina\p2-grupo13\p2-grupo13\envios.h
+
+1696521118 d:\educación\a.unsl\2do\segundo cuatrimentre\eda\tpmaquina\p2-grupo13\p2-grupo13\lso.h
+	"envios.h"
+
+1696521118 d:\educación\a.unsl\2do\segundo cuatrimentre\eda\tpmaquina\p2-grupo13\p2-grupo13\lsobb.h
+	"envios.h"
+	"math.h"
+
+1696521023 d:\educación\a.unsl\2do\segundo cuatrimentre\eda\tpmaquina\p2-grupo13\p2-grupo13\abb.h
+	<string.h>
+	<conio.h>
+	"envios.h"
+	<malloc.h>
+
+1696976319 source:e:\educacion\2do\segundo cuatrimentre\eda\labs\p2-grupo13\p2-grupo13\p2-grupo13\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"string.h"
+	"envios.h"
+	"LSO.h"
+	"LSOBB.h"
+	"ABB.h"
+
+1696799281 e:\educacion\2do\segundo cuatrimentre\eda\labs\p2-grupo13\p2-grupo13\p2-grupo13\envios.h
+
+1696800138 e:\educacion\2do\segundo cuatrimentre\eda\labs\p2-grupo13\p2-grupo13\p2-grupo13\lso.h
+	"envios.h"
+
+1696811742 e:\educacion\2do\segundo cuatrimentre\eda\labs\p2-grupo13\p2-grupo13\p2-grupo13\lsobb.h
+	"envios.h"
+	"math.h"
+
+1696800138 e:\educacion\2do\segundo cuatrimentre\eda\labs\p2-grupo13\p2-grupo13\p2-grupo13\abb.h
 	<string.h>
 	<conio.h>
 	"envios.h"

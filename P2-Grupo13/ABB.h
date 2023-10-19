@@ -26,8 +26,8 @@ int localizarABB(char cod[],arbol *a,int accion){
     int auxcost=0;
     a->pos=a->raiz;
     a->padre=a->raiz;
-    while(a->pos != NULL && strcmp(a->pos->env.codigo,cod) != 0){
-        if(strcmp(a->pos->env.codigo,cod) < 0){
+    while(a->pos != NULL && strcmpi(a->pos->env.codigo,cod) != 0){
+        if(strcmpi(a->pos->env.codigo,cod) < 0){
             a->padre = a->pos;
             a->pos = a->pos->der;
         }else{
@@ -80,7 +80,7 @@ int altaABB(arbol *a,envio env){
             if(a->raiz == NULL){
                 a->raiz=nuevo_nodo;
                 return 1;//arbol sin elementos
-            }else if (strcmp(a->padre->env.codigo,env.codigo) < 0){
+            }else if (strcmpi(a->padre->env.codigo,env.codigo) < 0){
                 a->padre->der = nuevo_nodo;
                 return 1;//arbol con padre menor al nuevo elemento
             }else{
@@ -99,8 +99,8 @@ int bajaABB(arbol *a,envio env){
         return 2;
     }else{
         nodo *aux;
-        if(strcmp(a->pos->env.codigo,env.codigo)==0 && strcmp(a->pos->env.nomyapeRemi,env.nomyapeRemi)==0 && strcmp(a->pos->env.nomyapeRece,env.nomyapeRece)==0 &&
-           strcmp(a->pos->env.domicilioRece,env.domicilioRece)==0 && strcmp(a->pos->env.fechaEnv,env.fechaEnv)==0 && strcmp(a->pos->env.fechaRece,env.fechaRece)==0 &&
+        if(strcmpi(a->pos->env.codigo,env.codigo)==0 && strcmpi(a->pos->env.nomyapeRemi,env.nomyapeRemi)==0 && strcmpi(a->pos->env.nomyapeRece,env.nomyapeRece)==0 &&
+           strcmpi(a->pos->env.domicilioRece,env.domicilioRece)==0 && strcmpi(a->pos->env.fechaEnv,env.fechaEnv)==0 && strcmpi(a->pos->env.fechaRece,env.fechaRece)==0 &&
            a->pos->env.documentoRece == env.documentoRece && a->pos->env.documentoRemi == env.documentoRemi){
             if(a->pos->der == NULL && a->pos->izq == NULL){ //NODO SIN HIJOS
                 auxcost+=0.5;

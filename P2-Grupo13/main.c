@@ -10,25 +10,54 @@
 //MARIANO ARBELOA GUGLIELMINO
 //VALENTIN VALDEON
 
+/*
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+        |   Max. Alta  |   Med. Alta   |  Max. Baja   |   Med. Baja   | Max. Evocar Exito | Med. Evocar Exito | Max Evocar Fracaso | Med Evocar Fracaso|
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------
+  LSO   |    58.00     |     15.07     |     47.00    |     16.77     |       60.00       |       23.97       |       42.00        |       16.70       |
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------
+ LSOBB  |     58.00    |     15.07     |     47.00    |     16.77     |       6.00        |       5.57        |        6.00        |       4.87        |
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------
+  ABB   |     0.50     |     0.50      |     1.50     |     0.98      |       12.00       |       5.71        |        10.00       |       5.27        |
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Considerando las estructuras de datos seleccionadas para abordar el problema y las funciones de costos, se
+distingue que, en el caso de la Lista Secuencial Ordenada (LSO), la Lista Secuencial Ordenada con Búsqueda Binaria (LSOBB) y el Árbol
+Binario de Búsqueda (ABB), los costos asociados a las evocaciones se miden en "celdas consultadas", para las operaciones de
+altas y bajas, la LSO y la LSOBB se evalúan en función de la "cantidad de corrimientos", mientras que el ABB, siendo una estructura basada
+en punteros, utiliza la "modificación de punteros y copia de datos".
+
+Analizando los esfuerzos máximos y mínimos en cada situación, se observa que:
+
+LSO: Se destaca por ser la estructura más costosa en términos de altas, bajas y evocaciones. Aunque su rendimiento es menos eficiente en
+comparación con otras estructuras, su simplicidad de implementación la convierte en una opción viable para programas básicos, donde los
+tiempos de ejecución no son críticos.
+
+LSOBB: Esta estructura, que incorpora búsqueda binaria (Biseccion), mejora significativamente en costos de evocación en comparación
+a la LSO y el ABB. Sin embargo, sus costos de altas y bajas no difieren de la LSO, lo que la hace menos favorable para operaciones de
+ese tipo.
+
+ABB: El Árbol Binario de Búsqueda surge como la elección preferida para el problema en este práctico. Presenta costos muy bajos
+en altas y bajas, lo que lo posiciona como la estructura óptima para dichas operaciones. Aunque la LSOBB supera ligeramente al ABB
+en evocaciones, la diferencia no es significativa, asegurando al ABB como la estructura preferida para el contexto del problema
+planteado.
+*/
+
+
 void comparacion(lista lso, listabb lsobb, arbol a);
 void mostrarEstructura(lista lso);
 void mostrarEstructuraLSOBB(listabb lsobb);
-void memorizacionPrevia(lista *lso);
-void memorizacionPreviaLSOBB(listabb *lsobb);
-void memorizacionPreviaABB(arbol *a);
+void memorizacionPrevia(lista *lso, listabb *lsobb, arbol *a);
+//void memorizacionPreviaLSO(lista *lso);
+//void memorizacionPreviaLSOBB(listabb *lsobb);
+//void memorizacionPreviaABB(arbol *a);
 
 int main(){
     int opcMenuOp;
     lista lso;
     listabb lsobb;
     arbol arbolito;
-    initLSO(&lso);
-    initLSOBB(&lsobb);
-    initABB(&arbolito);
     envio env;
-    memorizacionPrevia(&lso);
-    memorizacionPreviaLSOBB(&lsobb);
-    memorizacionPreviaABB(&arbolito);
     do{
             system("cls");
             printf("Seleccione la operacion a realizar\n");
@@ -45,6 +74,10 @@ int main(){
             switch(opcMenuOp){
                 case 1:
                     system("cls");
+                    initLSO(&lso);
+                    initLSOBB(&lsobb);
+                    initABB(&arbolito);
+                    memorizacionPrevia(&lso,&lsobb,&arbolito);
                     comparacion(lso,lsobb,arbolito);
                     getchar();
                     break;
@@ -88,6 +121,7 @@ void comparacion(lista lso,listabb lsobb,arbol a){
         printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
         printf("  ABB   |     %.2f     |     %.2f      |     %.2f     |     %.2f      |       %.2f       |       %.2f        |        %.2f       |       %.2f        |\n",maxAbbAlta,(costAbbAlta/cantAbbAlta),maxAbbBaja,(costAbbBaja/cantAbbBaja),maxAbbEvocEx,(costAbbEvocEx/cantAbbEvocEx),maxAbbEvocFr,(costAbbEvocFr/cantAbbEvocFr));
         printf(" ---------------------------------------------------------------------------------------------------------------------------------------------------------- \n");
+        printf("Presione ENTER para volver");
 }
 
 void mostrarEstructura(lista lso){
@@ -141,8 +175,64 @@ void mostrarEstructuraLSOBB(listabb lsobb){
         }
     }
 }
+void memorizacionPrevia(lista *lso, listabb *lsobb, arbol *a){
+    FILE *fp;
+    envio env;
+    int accion;
+    int i=0;
+    char codigo[8];
+    int exito;
 
-void memorizacionPrevia(lista *lso){
+    if((fp = fopen("Operaciones-Envios.txt","r"))==NULL){
+        printf("El archivo esta vacio\n");
+        printf("Presione ENTER para continuar");
+        getchar();
+    }else{
+        while (!(feof(fp))){
+            fscanf(fp,"%d",&accion);
+            fscanf(fp," %[^\n]s",env.codigo);
+            if(accion==1 || accion==2){
+                fscanf(fp," %ld",&env.documentoRece);
+                fscanf(fp," %[^\n]s",env.nomyapeRece);
+                fscanf(fp," %[^\n]s",env.domicilioRece);
+                fscanf(fp," %ld",&env.documentoRemi);
+                fscanf(fp," %[^\n]s",env.nomyapeRemi);
+                fscanf(fp," %[^\n]s",env.fechaEnv);
+                fscanf(fp," %[^\n]s",env.fechaRece);
+                if(accion==1){
+                    if((*lsobb).cant < MAX)
+                        altaLSOBB(lsobb,env);
+                    if((*lso).cant < MAX)
+                        altaLSO(lso,env);
+                    altaABB(a,env);
+
+                }else{
+                    bajaABB(a,env);
+                    if((*lso).cant != 0)
+                        bajaLSO(lso,env);
+                    if((*lsobb).cant != 0)
+                        bajaLSOBB(lsobb,env);
+                }
+            }else if (accion==3){
+                evocacionABB(*a,env.codigo,&exito);
+                evocacionLSO(env.codigo,*lso,&exito);
+                evocacionLSOBB(env.codigo,*lsobb,&exito);
+            }else{
+                printf("Codigo de operacion no valido.\n");
+            }
+        }
+    }
+    if (!(feof(fp)))
+        {
+            printf("Se llego al limite de Envios, quedaron vendedores sin cargar del archivo.\n");
+        }
+        fflush(stdin);
+        system("cls");
+        fclose(fp);
+}
+
+
+/*void memorizacionPreviaLSO(lista *lso){
     FILE *fp;
     envio env;
     int accion;
@@ -203,9 +293,10 @@ void memorizacionPrevia(lista *lso){
         system("cls");
     }
     fclose(fp);
-}
+}*/
 
-void memorizacionPreviaLSOBB(listabb *lsobb){
+
+/*void memorizacionPreviaLSOBB(listabb *lsobb){
     FILE *fp;
     envio env;
     int accion;
@@ -328,4 +419,4 @@ void memorizacionPreviaABB(arbol *a){
         system("cls");
     }
     fclose(fp);
-}
+}*/

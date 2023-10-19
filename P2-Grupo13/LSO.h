@@ -15,7 +15,7 @@ float costLsoEvocEx= 0.00, cantLsoEvocEx= 0.00, maxLsoEvocFr= 0.00, costLsoEvocF
 
 int localizarLSO(char cod[],lista *lso,int *pos,int accion){
     int i=0, auxcost=0;
-    while(i<(*lso).cant && (strcmp((*lso).arr[i].codigo,cod)<0)){
+    while(i<(*lso).cant && (strcmpi((*lso).arr[i].codigo,cod)<0)){
         i++;
         if(accion==1){
             auxcost+=1;
@@ -23,7 +23,7 @@ int localizarLSO(char cod[],lista *lso,int *pos,int accion){
     }
     (*pos)=i;
     if (i<(*lso).cant){
-        if((strcmp((*lso).arr[i].codigo,cod)==0)){
+        if((strcmpi((*lso).arr[i].codigo,cod)==0)){
             auxcost++;
             if(maxLsoEvocEx < auxcost){
             maxLsoEvocEx = auxcost;
@@ -85,14 +85,13 @@ int bajaLSO(lista *lso,envio env){
     int pos,exito,i,confirmar=0, auxcost=0;
     exito=localizarLSO(env.codigo,lso,&pos,0);
     if(exito == 1){
-        if(strcmp((*lso).arr[pos].codigo,env.codigo)==0 && strcmp((*lso).arr[pos].nomyapeRemi,env.nomyapeRemi)==0 && strcmp((*lso).arr[pos].nomyapeRece,env.nomyapeRece)==0 &&
-           strcmp((*lso).arr[pos].domicilioRece,env.domicilioRece)==0 && strcmp((*lso).arr[pos].fechaEnv,env.fechaEnv)==0 && strcmp((*lso).arr[pos].fechaRece,env.fechaRece)==0 &&
+        if(strcmpi((*lso).arr[pos].codigo,env.codigo)==0 && strcmpi((*lso).arr[pos].nomyapeRemi,env.nomyapeRemi)==0 && strcmpi((*lso).arr[pos].nomyapeRece,env.nomyapeRece)==0 &&
+           strcmpi((*lso).arr[pos].domicilioRece,env.domicilioRece)==0 && strcmpi((*lso).arr[pos].fechaEnv,env.fechaEnv)==0 && strcmpi((*lso).arr[pos].fechaRece,env.fechaRece)==0 &&
            (*lso).arr[pos].documentoRece == env.documentoRece && (*lso).arr[pos].documentoRemi == env.documentoRemi){
             for(i=pos;i<(*lso).cant-1;i++){
                 (*lso).arr[i]=(*lso).arr[i+1];
                 costLsoBaja += 1;
                 auxcost +=1;
-
             }
             if(maxLsoBaja<auxcost){
                 maxLsoBaja=auxcost;

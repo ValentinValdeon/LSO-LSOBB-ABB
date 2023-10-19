@@ -22,20 +22,20 @@ int localizarLSOBB(char cod[],listabb *lsobb,int *pos, int accion){
     for(i=0;i<(*lsobb).cant;i++){
         arr[i]=0;
     }
-    while(li<ls){
-        testigo = ceil((li+ls)/2);
-        if((strcmp((*lsobb).arr[testigo].codigo,cod)<0)){
-            li = testigo;
-        }else{
+    while(li+1<ls){
+        testigo = ceil(((li+ls+1)/2));
+        if((strcmpi((*lsobb).arr[testigo].codigo,cod)>0)){
             ls = testigo-1;
+        }else{
+            li = testigo-1;
         }
-        if(arr[testigo]==0){
+        if(arr[testigo]==0&&accion==1){
             arr[testigo]=1;
             auxcost+=1;
         }
     }
-    if (strcmp((*lsobb).arr[(int)li + 1].codigo,cod)==0){ //consultar si el == cuenta como consulta
-        if(arr[(int)li+1]==0){
+    if (strcmpi((*lsobb).arr[(int)ls].codigo,cod)==0){ //consultar si el == cuenta como consulta
+        if(arr[(int)ls]==0){
             auxcost++;
         }
         if(maxLsobbEvocEx < auxcost){
@@ -45,34 +45,23 @@ int localizarLSOBB(char cod[],listabb *lsobb,int *pos, int accion){
             cantLsobbEvocEx+=1;
             costLsobbEvocEx += auxcost;
         }
-        (*pos)=li + 1;
+        (*pos)=ls;
         return 1;
     }else{
-        if (ls == (*lsobb).cant-1){
-            if (strcmp((*lsobb).arr[(int)ls].codigo,cod)>0){
-                (*pos)=ls;
-            }else{
-                (*pos)=ls + 1;
-            }
-            if(arr[(int)li+1]==0){
-                auxcost++;
-            }
-            if(maxLsobbEvocFr < auxcost){
-                maxLsobbEvocFr = auxcost;
-            }
-            if(accion==1){
-                cantLsobbEvocFr +=1;
-                costLsobbEvocFr += auxcost;
-            }
+        if((*lsobb).cant > 0 && arr[(int)ls]==0){
+            auxcost++;
+        }
+        if (strcmpi((*lsobb).arr[(int)ls].codigo,cod)>0){
+            (*pos)=ls;
         }else{
-            (*pos)=ls + 1;
-            if(maxLsobbEvocFr < auxcost){
-                maxLsobbEvocFr = auxcost;
-            }
-            if(accion==1){
-                    cantLsobbEvocFr +=1;
-                    costLsobbEvocFr += auxcost;
-            }
+            (*pos)=ls+1;
+        }
+        if(maxLsobbEvocFr < auxcost){
+            maxLsobbEvocFr = auxcost;
+        }
+        if(accion==1){
+            cantLsobbEvocFr +=1;
+            costLsobbEvocFr += auxcost;
         }
         return 0;
     }
@@ -108,8 +97,8 @@ int bajaLSOBB(listabb *lsobb,envio env){
     int pos,exito,i,confirmar=0,auxcost=0;
     exito=localizarLSOBB(env.codigo,lsobb,&pos,0);
     if(exito == 1){
-        if(strcmp((*lsobb).arr[pos].codigo,env.codigo)==0 && strcmp((*lsobb).arr[pos].nomyapeRemi,env.nomyapeRemi)==0 && strcmp((*lsobb).arr[pos].nomyapeRece,env.nomyapeRece)==0 &&
-           strcmp((*lsobb).arr[pos].domicilioRece,env.domicilioRece)==0 && strcmp((*lsobb).arr[pos].fechaEnv,env.fechaEnv)==0 && strcmp((*lsobb).arr[pos].fechaRece,env.fechaRece)==0 &&
+        if(strcmpi((*lsobb).arr[pos].codigo,env.codigo)==0 && strcmpi((*lsobb).arr[pos].nomyapeRemi,env.nomyapeRemi)==0 && strcmpi((*lsobb).arr[pos].nomyapeRece,env.nomyapeRece)==0 &&
+           strcmpi((*lsobb).arr[pos].domicilioRece,env.domicilioRece)==0 && strcmpi((*lsobb).arr[pos].fechaEnv,env.fechaEnv)==0 && strcmpi((*lsobb).arr[pos].fechaRece,env.fechaRece)==0 &&
            (*lsobb).arr[pos].documentoRece == env.documentoRece && (*lsobb).arr[pos].documentoRemi == env.documentoRemi){
             for(i=pos;i<(*lsobb).cant-1;i++){
                 (*lsobb).arr[i]=(*lsobb).arr[i+1];
