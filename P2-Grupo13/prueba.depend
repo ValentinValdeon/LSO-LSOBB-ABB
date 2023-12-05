@@ -297,3 +297,53 @@
 	"envios.h"
 	<malloc.h>
 
+1696976563 source:d:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"string.h"
+	"envios.h"
+	"LSO.h"
+	"LSOBB.h"
+	"ABB.h"
+
+1696799281 d:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\envios.h
+
+1696800138 d:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\lso.h
+	"envios.h"
+
+1698799917 d:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\lsobb.h
+	"envios.h"
+	"math.h"
+
+1696800138 d:\educacion\2do\segundo cuatrimentre\eda\labs\lso-lsobb-abb\p2-grupo13\abb.h
+	<string.h>
+	<conio.h>
+	"envios.h"
+	<malloc.h>
+
+1698802748 source:c:\users\maria\onedrive\escritorio\lso-lsobb-abb\p2-grupo13\main.c
+	<stdio.h>
+	<stdlib.h>
+	<ctype.h>
+	"string.h"
+	"envios.h"
+	"LSO.h"
+	"LSOBB.h"
+	"ABB.h"
+
+1696799282 c:\users\maria\onedrive\escritorio\lso-lsobb-abb\p2-grupo13\envios.h
+
+1696800140 c:\users\maria\onedrive\escritorio\lso-lsobb-abb\p2-grupo13\lso.h
+	"envios.h"
+
+1699972673 c:\users\maria\onedrive\escritorio\lso-lsobb-abb\p2-grupo13\lsobb.h
+	"envios.h"
+	"math.h"
+
+1696800140 c:\users\maria\onedrive\escritorio\lso-lsobb-abb\p2-grupo13\abb.h
+	<string.h>
+	<conio.h>
+	"envios.h"
+	<malloc.h>
+
